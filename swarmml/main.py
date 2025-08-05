@@ -26,7 +26,7 @@ class MainClass:
         return config
 
 if __name__ == "__main__":
-    from swarmintelligence.ml_models_app.config import test_config as config
+    from swarmml.config import test_config as config
     main = MainClass(config)
     #main.ETL(config)
     #main.train(config)
