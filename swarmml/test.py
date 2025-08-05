@@ -1,8 +1,8 @@
 import unittest
-from swarmintelligence.ml_models_app.main import MainClass
-from swarmintelligence.ml_models_app.config import test_config as config
+from swarmml.main import MainClass
+from swarmml.config import test_config as config
 from eigenlib.utils.project_setup import ProjectSetupClass
-ProjectSetupClass(project_name='swarmintelligence', app_name='ml_models')
+ProjectSetupClass(project_folder='swarm-ml', test_environ=True)
 
 class TestUtilsClass(unittest.TestCase):
 

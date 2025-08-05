@@ -1,7 +1,7 @@
 
 """Config v0"""
 hypothesis = """Pruebas basicas con titanic"""
-from swarmintelligence.ml_models_app.modules.titanic_model import TitanicModelClass
+from swarmml.modules.titanic_model import TitanicModelClass
 version = 'v0'
 test_config = {
             'hypothesis': hypothesis,

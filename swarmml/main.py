@@ -1,5 +1,5 @@
 from eigenlib.utils.project_setup import ProjectSetupClass
-ProjectSetupClass(project_name='swarmintelligence', app_name='ml_models')
+ProjectSetupClass(project_folder='swarm-ml')
 
 class MainClass:
     def __init__(self, config):
