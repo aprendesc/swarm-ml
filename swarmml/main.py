@@ -33,4 +33,4 @@ if __name__ == "__main__":
     main.eval(config)
     #main.hparam_tuning(config)
     #main.predict(config)
-    #main.run_frontend(
+    #main.run_frontend(config)
