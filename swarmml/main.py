@@ -1,6 +1,3 @@
-from eigenlib.utils.project_setup import ProjectSetupClass
-ProjectSetupClass(project_folder='swarm-ml')
-
 class MainClass:
     def __init__(self, config):
         self.model = config['model_class']
