@@ -1,7 +1,7 @@
 
 class TitanicModelClass:
     def __init__(self, config):
-        self.hiposthesis = 'Modelo titanic de pruebas'
+        self.hypothesis = 'Modelo titanic de pruebas'
 
     def ETL(self, config={}):
         from eigenlib.ML.etl_dummy import ETLDummyClass
@@ -21,7 +21,7 @@ class TitanicModelClass:
         from eigenlib.ML.lgbm_model import LGBMModelClass
         from eigenlib.ML.xgb_model import ModelXGBClass
         from eigenlib.ML.catboost_model import ModelCatboostClass
-        from eigenlib.ML.pytorn_nn_model_v2 import PytorchNNModelClass
+        from eigenlib.ML.pytorn_nn_model import PytorchNNModelClass
         from eigenlib.ML.ensemble_model import BlendingEnsemble
         from eigenlib.ML.metrics_classification_regression import MetricsClassificationRegressionClass
         from eigenlib.ML.wandb_logging import WandbLoggingClass

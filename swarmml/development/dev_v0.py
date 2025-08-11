@@ -12,9 +12,24 @@ class OSLLMClientClass:
         self.client_node.launch_node(node_name='client_node', node_method=None, master_address=master_address, password=password, delay=1)
 
     def run(self, history):
-        result = self.client_node.call(address_node="phi_4_node", payload={'history': history})
+        result = self.client_node.call(address_node="oss_phi_4", payload={'history': history})
         return result
 
 LLM = OSLLMClientClass()
 answer = LLM.run([{'role': 'user', 'content': 'Actua como un simulador de fisicas: si tengo una caja con pelotas, una de adhesivo, otra de helio otra de plomo y otra de neutronio, en t0 la caja esta dada la vuelta y con las pelotas en el fondo, cual es el estado en t10 segundos? '}])
 print(answer)
+
+
+from eigenlib.utils.project_setup import ProjectSetupClass
+ProjectSetupClass(project_folder='swarm-ml')
+
+from eigenlib.LLM.llm_client import LLMClientClass
+from eigenlib.LLM.episode import EpisodeClass
+
+################################################################################################################
+episode = EpisodeClass()
+episode.log(channel='user', modality='text', content='Que modelo eres?', agent_id='Q')
+answer = LLMClientClass(model="oss_phi_4", temperature=1).run(episode=episode, agent_id='Q')
+print(answer)
+
+
