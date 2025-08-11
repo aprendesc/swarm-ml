@@ -21,13 +21,3 @@ class MainClass:
     def predict(self, config):
         config = self.model(config).predict(config)
         return config
-
-if __name__ == "__main__":
-    from swarmml.config import test_config as config
-    main = MainClass(config)
-    #main.ETL(config)
-    #main.train(config)
-    main.eval(config)
-    #main.hparam_tuning(config)
-    #main.predict(config)
-    #main.run_frontend(config)
