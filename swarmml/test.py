@@ -2,7 +2,8 @@ import unittest
 from eigenlib.utils.project_setup import ProjectSetupClass
 ProjectSetupClass(project_folder='swarm-ml', test_environ=True)
 
-class TestUtilsClass(unittest.TestCase):
+"""Integration tests"""
+class TestMainClass(unittest.TestCase):
 
     def setUp(self):
         from swarmml.modules.titanic_model import TitanicModelClass
@@ -332,7 +333,8 @@ class TestUtilsClass(unittest.TestCase):
         ################################################################################################################
         self.main.predict(config)
 
-class UnitTestModulesClass(unittest.TestCase):
+"""Unit tests"""
+class TestModulesClass(unittest.TestCase):
     def setUp(self):
         from eigenlib.utils.testing_utils import TestingUtilsClass, module_test_coverage
         ################################################################################################################
