@@ -18,6 +18,7 @@ azure-identity
 optuna
 asciichartpy
 tabulate
-git+https://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@github.com/aprendesc/swarm-automations.git
-git+https://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@github.com/aprendesc/swarm-intelligence.git
-git+https://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@github.com/aprendesc/swarm-compute.git
+git+https://${GITHUB_TOKEN}@github.com/aprendesc/swarm-automations.git
+git+https://${GITHUB_TOKEN}@github.com/aprendesc/swarm-intelligence.git
+git+https://${GITHUB_TOKEN}@github.com/aprendesc/swarm-compute.git
+git+https://${GITHUB_TOKEN}@github.com/aprendesc/eigenlib.git

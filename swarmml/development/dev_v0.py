@@ -1,5 +1,5 @@
-from eigenlib.utils.project_setup import ProjectSetupClass
-ProjectSetupClass(project_folder='swarm-ml')
+from eigenlib.utils.testing_utils import TestUtils
+TestUtils().get_coverage('./swarmml')
 
 #MODULE##########################################################################################################
 class MainModule:
@@ -17,11 +17,17 @@ config = {
     }
 
 #LAUNCHER###############################################################################################################
-def launcher(config):
-    argument_1 = config['argument_1']
-    argument_2 = config['argument_2']
-    output = MainModule().run(argument_1, argument_2)
-    config['output'] = output
-    return config
+class TestMainModule:
+    def setUp(self):
+        pass
 
-launcher(config)
+    def testrun(config):
+        argument_1 = config['argument_1']
+        argument_2 = config['argument_2']
+        output = MainModule().run(argument_1, argument_2)
+        config['output'] = output
+        return config
+
+
+if __name__ == "__main__":
+    MainModule.run()

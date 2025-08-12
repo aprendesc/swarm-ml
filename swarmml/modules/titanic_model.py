@@ -1,9 +1,8 @@
-
 class TitanicModelClass:
     def __init__(self, config):
         self.hypothesis = 'Modelo titanic de pruebas'
 
-    def ETL(self, config={}):
+    def ETL(self, config=None):
         from eigenlib.ML.etl_dummy import ETLDummyClass
         dataset_name = config.get('data_name', 'titanic_dataset')
         n_shards = config.get('n_shards', 1)
