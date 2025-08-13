@@ -43,9 +43,7 @@ if False:
 ########################################################################################################################
 """Run all tests"""
 if False:
-    from dotenv import load_dotenv
     import unittest
-    load_dotenv()
     loader = unittest.TestLoader()
     suite = loader.discover(start_dir='./tests/modules', pattern='test_*.py')
     runner = unittest.TextTestRunner(verbosity=2)
