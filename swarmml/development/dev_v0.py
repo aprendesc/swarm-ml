@@ -10,7 +10,6 @@ class MainModule:
         output = argument_1 + argument_2
         return output
 
-
 #LAUNCHER###############################################################################################################
 import unittest
 class TestMainModule(unittest.TestCase):
