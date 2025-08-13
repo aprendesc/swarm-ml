@@ -3,9 +3,6 @@
 def main():
     import os
     from eigenlib.utils.data_utils import DataUtilsClass
-    from eigenlib.utils.config_utils import get_config
-    os.environ['project_name'] = 'swarmintelligence'
-    config = get_config()
     # CONFIG#################################################################################################################
     dataset_name = 'titanic_dataset'
     # df = DataUtilsClass().load_dataset(path=config['data_path'] + '/curated', dataset_name=dataset_name, format='parquet', file_features=False, n_threads=8, cloud=True, overwrite=True)
