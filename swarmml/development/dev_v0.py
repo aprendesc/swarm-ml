@@ -30,4 +30,4 @@ class TestMainModule:
 
 
 if __name__ == "__main__":
-    MainModule.run()z
+    MainModule.run()
