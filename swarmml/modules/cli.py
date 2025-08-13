@@ -23,13 +23,13 @@ class CLI:
 
             #MENU
             menu_1 = """
-            1- ETL
-            2- Train
-            3- Hyperparameters tuning
-            4- Eval
-            5- Predict
-            
-            Select a method: """
+1- ETL
+2- Train
+3- Hyperparameters tuning
+4- Eval
+5- Predict
+
+Select a method: """
             method = input(menu_1)
 
             print("""
