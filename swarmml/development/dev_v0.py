@@ -19,6 +19,7 @@ if True:
     os.environ['PROJECT_NAME'] = project_folder.replace('-', '')
     os.environ['PROJECT_FOLDER'] = project_folder
     os.chdir(os.path.join(base_path, project_folder))
+
 ########################################################################################################################
 """Test Coverage"""
 if True:
@@ -84,3 +85,16 @@ if False:
     test.setUp()
     test.test_run()
 
+
+"""New autocli"""
+if True:
+
+
+
+
+    import unittest
+    class TestAutoCLI(unittest.TestCase):
+        def setUp(self):
+            pass
+
+        def test_run(self):
