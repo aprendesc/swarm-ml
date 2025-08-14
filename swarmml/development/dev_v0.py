@@ -85,16 +85,3 @@ if False:
     test.setUp()
     test.test_run()
 
-
-"""New autocli"""
-if True:
-
-
-
-
-    import unittest
-    class TestAutoCLI(unittest.TestCase):
-        def setUp(self):
-            pass
-
-        def test_run(self):
