@@ -31,7 +31,7 @@ if True:
 """Launch main"""
 if False:
     from swarmml.main import MainClass
-    from swarmml.configs.test_config import test_config as config
+    from swarmml.configs.test_config import config
     main = MainClass(config)
     main.ETL(config)
     #main.train(config)

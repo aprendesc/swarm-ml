@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from swarmml.configs.test_config import test_config as config
+from swarmml.configs.test_config import config
 from swarmml.modules.cli import CLI
 
 class TestCLI(unittest.TestCase):

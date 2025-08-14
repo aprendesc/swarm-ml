@@ -3,7 +3,7 @@
 hypothesis = """Pruebas basicas con titanic"""
 from swarmml.modules.titanic_model import TitanicModelClass
 version = 'v0'
-test_config = {
+config = {
             'hypothesis': hypothesis,
             'version': version,
             #INITIALIZE
