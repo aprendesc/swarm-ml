@@ -1,87 +1,38 @@
-"""Loader Script"""
-if True:
-    import sys
-    import os
-    from dotenv import load_dotenv
-    ####################################################################################################################
-    project_folder = 'swarm-ml'
-    base_path = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
-    ####################################################################################################################
-    load_dotenv()
-    os.getcwd()
-    sys.path.extend([
-        os.path.join(base_path, 'swarm-ml'),
-        os.path.join(base_path, 'swarm-intelligence'),
-        os.path.join(base_path, 'swarm-automations'),
-        os.path.join(base_path, 'swarm-compute'),
-        os.path.join(base_path, 'eigenlib')
-    ])
-    os.environ['PROJECT_NAME'] = project_folder.replace('-', '')
-    os.environ['PROJECT_FOLDER'] = project_folder
-    os.chdir(os.path.join(base_path, project_folder))
+import unittest
+import os
+from eigenlib.utils.project_setup import ProjectSetup
 
 ########################################################################################################################
-"""Test Coverage"""
-if True:
-    from eigenlib.utils.testing_utils import TestUtils
-    _, coverage = TestUtils().get_coverage('./'+os.environ['PROJECT_NAME'])
-    assert int(coverage) == 100
-
-
+base_path = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
+project_folder = 'swarm-ml'
+path_dirs = [
+            os.path.join(base_path, 'swarm-ml'),
+            #os.path.join(base_path, 'swarm-intelligence'),
+            #os.path.join(base_path, 'swarm-automations'),
+            #os.path.join(base_path, 'swarm-compute'),
+            os.path.join(base_path, 'eigenlib')
+        ]
 ########################################################################################################################
-"""Launch main"""
-if False:
-    from swarmml.main import MainClass
-    from swarmml.configs.test_config import config
-    main = MainClass(config)
-    main.ETL(config)
-    #main.train(config)
-    #main.hparam_tuning(config)
-    #main.eval(config)
-    #main.predict(config)
+ps = ProjectSetup()
+ps.health_check(base_path=base_path, project_folder=project_folder, path_dirs=path_dirs,)
+_, _ = ps.coverage()
+#SEPARATOR##############################################################################################################
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+#TEMPLATES
+class MyClass:
+    def __init__(self):
+        pass
 
-########################################################################################################################
-"""Run all tests"""
-if False:
-    import unittest
-    loader = unittest.TestLoader()
-    suite = loader.discover(start_dir='./tests/modules', pattern='test_*.py')
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    def run(self):
+        print(ps)
+        print('Hola Mundo!')
 
+class TestMyClass(unittest.TestCase):
+    def SetUp(self):
+        pass
 
-########################################################################################################################
-"""Launch dummy development code."""
-if False:
-    class MainModule:
-        def __init__(self):
-            pass
-
-        def run(self, argument_1, argument_2):
-            output = argument_1 + argument_2
-            return output
-
-    print(MainModule().run(1, 2))
-
-    import unittest
-    class TestMainModule(unittest.TestCase):
-        def setUp(self):
-            pass
-
-        def test_run(self):
-            ################################################################################################################
-            config = {
-                'argument_1': 1,
-                'argument_2': 1,
-            }
-            ################################################################################################################
-            argument_1 = config['argument_1']
-            argument_2 = config['argument_2']
-            output = MainModule().run(argument_1, argument_2)
-            config['output'] = output
-            return config
-    test = TestMainModule()
-    test.setUp()
-    test.test_run()
+    def test_run(self):
+        mc = MyClass()
+        mc.run()
 
