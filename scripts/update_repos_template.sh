@@ -1,4 +1,4 @@
-source C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/<PROJECT_FOLDER>/.venv/Scripts/activate.bat
+#source C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/<PROJECT_FOLDER>/.venv/Scripts/activate.bat
 
 sleep 0.2
 cd C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/eigenlib

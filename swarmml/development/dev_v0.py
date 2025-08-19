@@ -96,7 +96,7 @@ class DatabricksJobLaunchClass:
 
         with open(f"./scripts/update_repos_template.sh", "r") as f:
             template = f.read()
-        template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['PROJECT_FOLDER'])
+        template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['PROJECT_FOLDER']).replace('<PROJECT_NAME>', os.environ['PROJECT_NAME'])
         with open(f"./scripts/update_repos.sh", "w") as f:
             f.write(template)
 
