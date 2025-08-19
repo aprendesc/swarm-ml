@@ -90,7 +90,7 @@ class DatabricksJobLaunchClass:
             print("Response:", response.text)
 
     def run_job_from_code(self, code, job_name, cluster_id):
-        script_path = f'./temp/{cluster_id}.py'
+        script_path = f'scripts/{cluster_id}.py'
         with open(script_path, "w") as archivo:
             archivo.write(code)
 
@@ -100,8 +100,10 @@ class DatabricksJobLaunchClass:
         with open(f"./scripts/update_repos.sh", "w") as f:
             f.write(template)
 
-        os.system(f"C:/Users/AlejandroPrendesCabo/Desktop/proyectos/{project_folder}/scripts/update_repos.sh")
-        self.create_job(job_name, cluster_id, script_path)
+        os.system(f"{os.getcwd()}/scripts/update_repos.sh")
+        db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["project_folder"]}'
+        db_file_path = os.path.join(db_wd, script_path)
+        self.create_job(job_name, cluster_id, db_file_path)
         self.launch()
 
 
