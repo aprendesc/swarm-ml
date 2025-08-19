@@ -102,7 +102,7 @@ class DatabricksJobLaunchClass:
 
         os.system(f"{os.getcwd()}/scripts/update_repos.sh")
         db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["project_folder"]}'
-        db_file_path = os.path.join(db_wd, script_path)
+        db_file_path = os.path.join(db_wd, script_path).replace('\\','/')
         self.create_job(job_name, cluster_id, db_file_path)
         self.launch()
 
