@@ -21,3 +21,5 @@ class MainClass:
     def predict(self, config):
         config = self.model(config).predict(config)
         return config
+
+    def deploy(self):
