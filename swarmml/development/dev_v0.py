@@ -91,8 +91,6 @@ class DatabricksJobLaunchClass:
 
     def run_job_from_code(self, code, job_name, cluster_id):
         script_path = f'./temp/{cluster_id}.py'
-        api_token = os.environ['DB_TOKEN']
-        instance = os.environ['DATABRICKS_INSTANCE']
         with open(script_path, "w") as archivo:
             archivo.write(code)
 
@@ -103,11 +101,8 @@ class DatabricksJobLaunchClass:
             f.write(template)
 
         os.system(f"C:/Users/AlejandroPrendesCabo/Desktop/proyectos/{project_folder}/scripts/update_repos.sh")
-        job_config = {"DATABRICKS_INSTANCE": instance, "API_TOKEN": api_token, "JOB_NAME": job_name, "JOB_ID": "job_id", "CLUSTER_ID": cluster_id, "SCRIPT_PATH": script_path, "PARAMETERS": []}
-        self.__init__(**job_config)
         self.create_job(job_name, cluster_id, script_path)
         self.launch()
-
 
 
 class TestDatabricksJobLaunchClass(unittest.TestCase):
