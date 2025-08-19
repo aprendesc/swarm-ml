@@ -1,4 +1,4 @@
-source C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/eigenlib/.venv/Scripts/activate.bat
+#source C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/swarm-ml/.venv/Scripts/activate.bat
 
 sleep 0.2
 cd C:/Users/AlejandroPrendesCabo/Desktop/Proyectos/eigenlib
