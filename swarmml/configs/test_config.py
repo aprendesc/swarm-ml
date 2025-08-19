@@ -1,4 +1,3 @@
-
 """Config v0"""
 hypothesis = """Pruebas basicas con titanic"""
 from swarmml.modules.titanic_model import TitanicModelClass
