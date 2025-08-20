@@ -1,12 +1,13 @@
 # Añadir PROJECT_NAME
-export PROJECT_NAME="swarmml"
-export PROJECT_FOLDER="swarm-ml"
+export BASE_PATH="C:/Users/$USERNAME/Desktop/proyectos/"
+export REPO_FOLDER="swarm-ml"
+export MODULE_NAME="swarmml"
 
 # Cambiar al directorio del proyecto
-cd "C:/Users/$USERNAME/Desktop/proyectos/$PROJECT_FOLDER" || exit
+cd "$BASE_PATH/$REPO_FOLDER" || exit
 
 # Configurar PYTHONPATH
-export PYTHONPATH="/c/Users/$USERNAME/Desktop/proyectos/$PROJECT_FOLDER:/c/Users/$USERNAME/Desktop/proyectos/eigenlib"
+export PYTHONPATH="$BASE_PATH/eigenlib"
 
 # Activar el entorno virtual
 source ".venv/Scripts/activate"

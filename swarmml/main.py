@@ -1,5 +1,8 @@
+from eigenlib.utils.project_setup import ProjectSetup
+
 class MainClass:
     def __init__(self, config):
+        ProjectSetup().init()
         self.model = config['model_class']
 
     def ETL(self, config):
@@ -23,3 +26,4 @@ class MainClass:
         return config
 
     def deploy(self):
+        pass

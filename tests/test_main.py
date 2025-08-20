@@ -20,3 +20,4 @@ class TestMainClass(unittest.TestCase):
 
     def test_predict(self):
         self.main.predict(config)
+

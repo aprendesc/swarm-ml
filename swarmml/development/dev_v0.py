@@ -1,21 +1,32 @@
-import unittest
-import os
+import sys, os
 from eigenlib.utils.project_setup import ProjectSetup
-
 ########################################################################################################################
-base_path = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
-project_folder = 'swarm-ml'
+os.environ['BASE_PATH'] = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
+os.environ['REPO_FOLDER'] = 'swarm-ml'
+os.environ['MODULE_NAME'] = 'swarmml'
 path_dirs = [
-            os.path.join(base_path, 'swarm-ml'),
-            #os.path.join(base_path, 'swarm-intelligence'),
-            #os.path.join(base_path, 'swarm-automations'),
-            #os.path.join(base_path, 'swarm-compute'),
-            os.path.join(base_path, 'eigenlib')
-        ]
+                os.path.join(os.environ['BASE_PATH'], 'swarm-ml'),
+                os.path.join(os.environ['BASE_PATH'], 'swarm-intelligence'),
+                os.path.join(os.environ['BASE_PATH'], 'swarm-automations'),
+                os.path.join(os.environ['BASE_PATH'], 'swarm-compute'),
+                os.path.join(os.environ['BASE_PATH'], 'eigenlib'),
+                ]
+sys.path.extend(path_dirs)
 ########################################################################################################################
 ps = ProjectSetup()
-ps.health_check(base_path=base_path, project_folder=project_folder, path_dirs=path_dirs,)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ps.init()
+ps.coverage()
+########################################################################################################################
+# PROJECT SERVER
+import os
+from swarmautomations.main import MainClass as SAMainClass
+config = {
+    'launch_master': True,
+    'node_name': os.environ['MODULE_NAME'],
+    'node_delay': 1
+}
+sa_main = SAMainClass(config).deploy_project_server(config)
+########################################################################################################################
 
 #TEMPLATES
 class MyClass:
@@ -26,6 +37,7 @@ class MyClass:
         print(ps)
         print('Hola Mundo!')
 
+import unittest
 class TestMyClass(unittest.TestCase):
     def SetUp(self):
         pass
@@ -33,6 +45,8 @@ class TestMyClass(unittest.TestCase):
     def test_run(self):
         mc = MyClass()
         mc.run()
+
+########################################################################################################################
 
 import json
 import os
@@ -105,7 +119,6 @@ class DatabricksJobLaunchClass:
         db_file_path = os.path.join(db_wd, script_path).replace('\\','/')
         self.create_job(job_name, cluster_id, db_file_path)
         self.launch()
-
 
 class TestDatabricksJobLaunchClass(unittest.TestCase):
     def SetUp(self):
