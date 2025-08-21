@@ -4,10 +4,11 @@ class TitanicModelClass:
 
     def ETL(self, config=None):
         from eigenlib.ML.etl_dummy import ETLDummyClass
-        dataset_name = config.get('data_name', 'titanic_dataset')
+        selected_dataset = config['selected_dataset']
+        output_dataset_name = config['output_dataset_name']
         n_shards = config.get('n_shards', 1)
         cloud = config.get('cloud', False)
-        X, y, config = ETLDummyClass(dataset_name=dataset_name, n_shards=n_shards, cloud=cloud).run()
+        X, y, config = ETLDummyClass(dataset_name=selected_dataset, output_dataset_name=output_dataset_name, n_shards=n_shards, cloud=cloud).run()
         return config
 
     def train(self, config):

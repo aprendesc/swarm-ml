@@ -1,75 +1,119 @@
-"""Config v0"""
-hypothesis = """Pruebas basicas con titanic"""
-version = 'v0'
-config = {
-            'hypothesis': hypothesis,
-            'version': version,
-            #INITIALIZE
+from swarmml.modules.titanic_model import TitanicModelClass
+
+class Config:
+    def __init__(self, version='v0', hypothesis=None):
+        self.version = version
+        self.hypothesis = hypothesis or 'Pruebas basicas con el dataset de Titanic'
+
+    def initialize(self, update=None):
+        base_cfg = {
+            'hypothesis': self.hypothesis,
+            'version': self.version,
             'model_class': TitanicModelClass,
-            #ETL
+        }
+        return base_cfg | (update or {})
+
+    def ETL(self, update=None):
+        base_cfg = {
             'n_shards': 1,
             'cloud': False,
-            'dataset_name': 'titanic_dataset',
-            #TRAIN
-            'model_id': 'titanic_test_v0',
+            'selected_dataset': 'titanic_dataset',
+            'output_dataset_name': 'titanic_dataset_' + self.version,
+        }
+        return base_cfg | (update or {})
+
+    def train(self, update=None):
+        model_id = f'titanic_test_{self.version}'
+        Catboost_params_dict = {
+            'iterations': 1000,
+            'learning_rate': 0.01,
+            'depth': 6,
+            'loss_function': 'Logloss',
+            'eval_metric': 'Accuracy',
+            'cat_features': [],
+            'random_state': 42,
+            'logging_level': 'Silent',
+            'early_stopping_rounds': 20,
+            'subsample': 0.8,
+            'colsample_bylevel': 0.8,
+            'l2_leaf_reg': 3,
+            'border_count': 32,
+            'thread_count': -1,
+        }
+        LGBM_params_dict = {
+            'boosting_type': 'gbdt',
+            'objective': 'binary',
+            'metric': 'accuracy',
+            'n_estimators': 1000,
+            'learning_rate': 0.01,
+            'num_leaves': 32,
+            'max_depth': 6,
+            'min_child_samples': 20,
+            'subsample': 0.8,
+            'subsample_freq': 1,
+            'colsample_bytree': 0.8,
+            'reg_alpha': 0.1,
+            'reg_lambda': 0.1,
+            'random_state': 42,
+            'n_jobs': -1,
+            'verbosity': -1,
+        }
+        XGB_params_dict = {
+            'objective': 'binary:logistic',
+            'eval_metric': 'logloss',
+            'booster': 'gbtree',
+            'max_depth': 4,
+            'min_child_weight': 1,
+            'gamma': 0.1,
+            'learning_rate': 0.05,
+            'subsample': 0.8,
+            'colsample_bytree': 0.8,
+            'reg_alpha': 0.01,
+            'reg_lambda': 1.0,
+            'num_boost_round': 500,
+            'early_stopping_rounds': 20,
+        }
+        base_cfg = {
+            'model_id': model_id,
             'to_cloud': False,
             'checkpoint': 1,
             'hparams_grid': {'num_boost_round': 0.001},
             'main_metric': 'accuracy',
-            'Catboost_params_dict': {
-                        'iterations': 1000,
-                        'learning_rate': 0.01,
-                        'depth': 6,
-                        'loss_function': 'Logloss',
-                        'eval_metric': 'Accuracy',
-                        'cat_features': [],
-                        'random_state': 42,
-                        'logging_level': 'Silent',
-                        'early_stopping_rounds': 20,
-                        'subsample': 0.8,
-                        'colsample_bylevel': 0.8,
-                        'l2_leaf_reg': 3,
-                        'border_count': 32,
-                        'thread_count': -1,
-                    },
-            'LGBM_params_dict': {
-                'boosting_type': 'gbdt',
-                'objective': 'binary',
-                'metric': 'accuracy',
-                'n_estimators': 1000,
-                'learning_rate': 0.01,
-                'num_leaves': 32,
-                'max_depth': 6,
-                'min_child_samples': 20,
-                'subsample': 0.8,
-                'subsample_freq': 1,
-                'colsample_bytree': 0.8,
-                'reg_alpha': 0.1,
-                'reg_lambda': 0.1,
-                'random_state': 42,
-                'n_jobs': -1,
-                'verbosity': -1
-            },
-            'XGB_params_dict': {
-                "objective": "binary:logistic",
-                "eval_metric": "logloss",
-                "booster": "gbtree",
-                "max_depth": 4,
-                "min_child_weight": 1,
-                "gamma": 0.1,
-                "learning_rate": 0.05,
-                "subsample": 0.8,
-                "colsample_bytree": 0.8,
-                "reg_alpha": 0.01,
-                "reg_lambda": 1.0,
-                "num_boost_round": 500,
-                "early_stopping_rounds": 20
-            },
+            'Catboost_params_dict': Catboost_params_dict,
+            'LGBM_params_dict': LGBM_params_dict,
+            'XGB_params_dict': XGB_params_dict,
+            'dataset_name': 'titanic_dataset_' + self.version,
+        }
+        return base_cfg | (update or {})
+
+    def hparam_tuning(self, update=None):
+        base_cfg = {
             'tuning_direction': 'maximize',
             'tuning_trials': 2,
-            #EVAL
-            #SERVING
-            'endpoint_name': '',
-            'script': '/Repos/alejandropca@ext.inditex.com/swarm-intelligence-project/swarmintelligence/launcher.py'
         }
-# ----------------------------------------------------------------------------------------------------------------------
+        return self.train() | base_cfg | (update or {})
+
+    def eval(self, update=None):
+        model_id = f'titanic_test_{self.version}'
+        base_cfg = {
+            'model_id': model_id,
+            'cloud': False,
+        }
+        return base_cfg | (update or {})
+
+    def predict(self, update=None):
+        model_id = f'titanic_test_{self.version}'
+        base_cfg = {
+            'model_id': model_id,
+        }
+        return base_cfg | (update or {})
+
+    def serving(self, update=None):
+        base_cfg = {
+            'endpoint_name': '',
+            'script': '/Repos/alejandropca@ext.inditex.com/swarm-intelligence-project/swarmintelligence/launcher.py',
+        }
+        return base_cfg | (update or {})
+
+    def __repr__(self):
+        return f'<Config version={self.version}>'
