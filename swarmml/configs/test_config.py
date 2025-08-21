@@ -2,16 +2,17 @@
 hypothesis = """Pruebas basicas con titanic"""
 from swarmml.modules.titanic_model import TitanicModelClass
 version = 'v0'
-config = {
-            'hypothesis': hypothesis,
-            'version': version,
-            #INITIALIZE
-            'model_class': TitanicModelClass,
-            #ETL
-            'n_shards': 1,
-            'cloud': False,
-            'dataset_name': 'titanic_dataset',
-            #TRAIN
+
+etl_config = {
+    'hypothesis': hypothesis,
+    'version': version,
+    'model_class': TitanicModelClass,
+    'n_shards': 1,
+    'cloud': False,
+    'dataset_name': 'titanic_dataset',
+}
+
+train_config = {
             'model_id': 'titanic_test_v0',
             'to_cloud': False,
             'checkpoint': 1,
@@ -69,8 +70,7 @@ config = {
             'tuning_direction': 'maximize',
             'tuning_trials': 2,
             #EVAL
-            #SERVING
-            'endpoint_name': '',
-            'script': '/Repos/alejandropca@ext.inditex.com/swarm-intelligence-project/swarmintelligence/launcher.py'
         }
+
+config = etl_config | train_config
 # ----------------------------------------------------------------------------------------------------------------------

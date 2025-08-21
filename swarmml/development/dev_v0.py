@@ -18,6 +18,33 @@ ps.init()
 ps.coverage()
 ########################################################################################################################
 
+from swarmml.main import MainClass
+MainClass().project_dev_server(**{})
+
+
+
+from swarmcompute.main import MainClass as SCMainClass
+import time
+################################################################################################################
+def inference_method(history):
+    output = LLM.predict(history=history)
+    return output['answer']
+config = {
+    'mode': 'node',
+    'master_address': 'tcp://95.18.166.44:5005',
+    'password': 'testpass',
+    'node_name': 'phi_4_node',
+    'node_method': inference_method,
+    'address_node': None,
+    'payload': None,
+    'delay': 1,
+    'wait': True,
+}
+sc_main = SCMainClass(config)
+sc_main.launch_personal_net(config)
+while True:
+    time.sleep(1)
+
 
 #TEMPLATES
 class MyClass:
