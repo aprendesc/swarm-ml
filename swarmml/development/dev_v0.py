@@ -17,16 +17,7 @@ ps = ProjectSetup()
 ps.init()
 ps.coverage()
 ########################################################################################################################
-# PROJECT SERVER
-import os
-from swarmautomations.main import MainClass as SAMainClass
-config = {
-    'launch_master': False,
-    'node_name': os.environ['MODULE_NAME'],
-    'node_delay': 1
-}
-sa_main = SAMainClass(config).deploy_project_server(config)
-########################################################################################################################
+
 
 #TEMPLATES
 class MyClass:
@@ -110,12 +101,12 @@ class DatabricksJobLaunchClass:
 
         with open(f"./scripts/update_repos_template.sh", "r") as f:
             template = f.read()
-        template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['PROJECT_FOLDER']).replace('<PROJECT_NAME>', os.environ['PROJECT_NAME'])
+        template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['REPO_FOLDER']).replace('<PROJECT_NAME>', os.environ['MODULE_NAME'])
         with open(f"./scripts/update_repos.sh", "w") as f:
             f.write(template)
 
         os.system(f"{os.getcwd()}/scripts/update_repos.sh")
-        db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["project_folder"]}'
+        db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["REPO_FOLDER"]}'
         db_file_path = os.path.join(db_wd, script_path).replace('\\','/')
         self.create_job(job_name, cluster_id, db_file_path)
         self.launch()
