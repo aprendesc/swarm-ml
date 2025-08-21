@@ -37,14 +37,3 @@ class MainClass:
         response = sc_main.launch_personal_net(config)
         config['response'] = response
         return config
-
-    def project_dev_server(self, **kwargs):
-        import os
-        from swarmautomations.main import MainClass as SAMainClass
-        config = {
-            'launch_master': False,
-            'node_name': os.environ['MODULE_NAME'],
-            'node_delay': 1
-        }
-        sa_main = SAMainClass(config)
-        sa_main.dev_tools_server(config)

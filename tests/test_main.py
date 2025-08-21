@@ -29,3 +29,9 @@ class TestMain(unittest.TestCase):
     def test_predict(self):
         self.main.initialize(self.cfg.initialize())
         self.main.predict(self.cfg.predict())
+
+    def test_deploy(self):
+        pass
+
+    def test_call(self):
+        pass

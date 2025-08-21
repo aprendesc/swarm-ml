@@ -108,12 +108,12 @@ class Config:
         }
         return base_cfg | (update or {})
 
-    def serving(self, update=None):
+    def deploy(self, update=None):
         base_cfg = {
-            'endpoint_name': '',
-            'script': '/Repos/alejandropca@ext.inditex.com/swarm-intelligence-project/swarmintelligence/launcher.py',
         }
         return base_cfg | (update or {})
 
-    def __repr__(self):
-        return f'<Config version={self.version}>'
+    def call(self, update=None):
+        base_cfg = {
+        }
+        return base_cfg | (update or {})

@@ -1,150 +1,116 @@
-import sys, os
+import os
 from eigenlib.utils.project_setup import ProjectSetup
 ########################################################################################################################
 os.environ['BASE_PATH'] = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
 os.environ['REPO_FOLDER'] = 'swarm-ml'
 os.environ['MODULE_NAME'] = 'swarmml'
-path_dirs = [
-                os.path.join(os.environ['BASE_PATH'], 'swarm-ml'),
-                os.path.join(os.environ['BASE_PATH'], 'swarm-intelligence'),
-                os.path.join(os.environ['BASE_PATH'], 'swarm-automations'),
-                os.path.join(os.environ['BASE_PATH'], 'swarm-compute'),
-                os.path.join(os.environ['BASE_PATH'], 'eigenlib'),
-                ]
-sys.path.extend(path_dirs)
 ########################################################################################################################
 ps = ProjectSetup()
 ps.init()
 ps.coverage()
 ########################################################################################################################
 
-from swarmml.main import MainClass
-MainClass().project_dev_server(**{})
 
+if False:
+    #TEMPLATES
+    class MyClass:
+        def __init__(self):
+            pass
 
+        def run(self):
+            print(ps)
+            print('Hola Mundo!')
 
-from swarmcompute.main import MainClass as SCMainClass
-import time
-################################################################################################################
-def inference_method(history):
-    output = LLM.predict(history=history)
-    return output['answer']
-config = {
-    'mode': 'node',
-    'master_address': 'tcp://95.18.166.44:5005',
-    'password': 'testpass',
-    'node_name': 'phi_4_node',
-    'node_method': inference_method,
-    'address_node': None,
-    'payload': None,
-    'delay': 1,
-    'wait': True,
-}
-sc_main = SCMainClass(config)
-sc_main.launch_personal_net(config)
-while True:
-    time.sleep(1)
+    import unittest
+    class TestMyClass(unittest.TestCase):
+        def SetUp(self):
+            pass
 
+        def test_run(self):
+            mc = MyClass()
+            mc.run()
 
-#TEMPLATES
-class MyClass:
-    def __init__(self):
-        pass
+    ########################################################################################################################
 
-    def run(self):
-        print(ps)
-        print('Hola Mundo!')
+    import json
+    import os
+    import requests
 
-import unittest
-class TestMyClass(unittest.TestCase):
-    def SetUp(self):
-        pass
+    class DatabricksJobLaunchClass:
+        def __init__(self, DATABRICKS_INSTANCE=None, API_TOKEN=None, JOB_NAME=None, PARAMETERS=None):
+            self.DATABRICKS_INSTANCE = DATABRICKS_INSTANCE
+            self.API_TOKEN = API_TOKEN
+            self.JOB_NAME = JOB_NAME
+            self.PARAMETERS = PARAMETERS if PARAMETERS is not None else []
 
-    def test_run(self):
-        mc = MyClass()
-        mc.run()
-
-########################################################################################################################
-
-import json
-import os
-import requests
-
-class DatabricksJobLaunchClass:
-    def __init__(self, DATABRICKS_INSTANCE=None, API_TOKEN=None, JOB_NAME=None, PARAMETERS=None):
-        self.DATABRICKS_INSTANCE = DATABRICKS_INSTANCE
-        self.API_TOKEN = API_TOKEN
-        self.JOB_NAME = JOB_NAME
-        self.PARAMETERS = PARAMETERS if PARAMETERS is not None else []
-
-    def create_job(self, job_name, cluster_id, script_path):
-        job_config = {
-            "name": job_name,
-            "tasks": [{
-                    "task_key": "test_databricks_job_task",
-                    "description": "A test job for running a Python script",
-                    "existing_cluster_id": cluster_id,
-                    "spark_python_task": {
-                                "python_file": script_path,
-                                "parameters": self.PARAMETERS
-                            }
-            }],
-            "max_concurrent_runs": 1
-        }
-        headers = {'Authorization': f'Bearer {self.API_TOKEN}', 'Content-Type': 'application/json'}
-        response = requests.post(f'{self.DATABRICKS_INSTANCE}/api/2.0/jobs/create', headers=headers, data=json.dumps(job_config))
-        if response.status_code == 200:
-            print("Job created successfully.")
-            print("Job ID:", response.json()["job_id"])
-            self.job_id = response.json()["job_id"]
-        else:
-            print("Failed to create job.")
-            print("Response:", response.text)
-
-    def launch(self, job_id=None):
-        if job_id is None:
-            job_id = self.job_id
-        run_payload = {
-            "job_id": job_id,
-            "notebook_params": {
-                "parameters": json.dumps(["-f", "/Volumes/catalog/schema/volume/path/to/file.csv"])
+        def create_job(self, job_name, cluster_id, script_path):
+            job_config = {
+                "name": job_name,
+                "tasks": [{
+                        "task_key": "test_databricks_job_task",
+                        "description": "A test job for running a Python script",
+                        "existing_cluster_id": cluster_id,
+                        "spark_python_task": {
+                                    "python_file": script_path,
+                                    "parameters": self.PARAMETERS
+                                }
+                }],
+                "max_concurrent_runs": 1
             }
-        }
-        headers = {'Authorization': f'Bearer {self.API_TOKEN}','Content-Type': 'application/json'}
-        response = requests.post(f'{self.DATABRICKS_INSTANCE}/api/2.0/jobs/run-now', headers=headers, data=json.dumps(run_payload))
+            headers = {'Authorization': f'Bearer {self.API_TOKEN}', 'Content-Type': 'application/json'}
+            response = requests.post(f'{self.DATABRICKS_INSTANCE}/api/2.0/jobs/create', headers=headers, data=json.dumps(job_config))
+            if response.status_code == 200:
+                print("Job created successfully.")
+                print("Job ID:", response.json()["job_id"])
+                self.job_id = response.json()["job_id"]
+            else:
+                print("Failed to create job.")
+                print("Response:", response.text)
 
-        if response.status_code == 200:
-            run_id = response.json()["run_id"]
-            print("Job launched successfully.")
-            print("Run ID:", run_id)
-        else:
-            print("Failed to launch job.")
-            print("Response:", response.text)
+        def launch(self, job_id=None):
+            if job_id is None:
+                job_id = self.job_id
+            run_payload = {
+                "job_id": job_id,
+                "notebook_params": {
+                    "parameters": json.dumps(["-f", "/Volumes/catalog/schema/volume/path/to/file.csv"])
+                }
+            }
+            headers = {'Authorization': f'Bearer {self.API_TOKEN}','Content-Type': 'application/json'}
+            response = requests.post(f'{self.DATABRICKS_INSTANCE}/api/2.0/jobs/run-now', headers=headers, data=json.dumps(run_payload))
 
-    def run_job_from_code(self, code, job_name, cluster_id):
-        script_path = f'scripts/{cluster_id}.py'
-        with open(script_path, "w") as archivo:
-            archivo.write(code)
+            if response.status_code == 200:
+                run_id = response.json()["run_id"]
+                print("Job launched successfully.")
+                print("Run ID:", run_id)
+            else:
+                print("Failed to launch job.")
+                print("Response:", response.text)
 
-        with open(f"./scripts/update_repos_template.sh", "r") as f:
-            template = f.read()
-        template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['REPO_FOLDER']).replace('<PROJECT_NAME>', os.environ['MODULE_NAME'])
-        with open(f"./scripts/update_repos.sh", "w") as f:
-            f.write(template)
+        def run_job_from_code(self, code, job_name, cluster_id):
+            script_path = f'scripts/{cluster_id}.py'
+            with open(script_path, "w") as archivo:
+                archivo.write(code)
 
-        os.system(f"{os.getcwd()}/scripts/update_repos.sh")
-        db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["REPO_FOLDER"]}'
-        db_file_path = os.path.join(db_wd, script_path).replace('\\','/')
-        self.create_job(job_name, cluster_id, db_file_path)
-        self.launch()
+            with open(f"./scripts/update_repos_template.sh", "r") as f:
+                template = f.read()
+            template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['REPO_FOLDER']).replace('<PROJECT_NAME>', os.environ['MODULE_NAME'])
+            with open(f"./scripts/update_repos.sh", "w") as f:
+                f.write(template)
 
-class TestDatabricksJobLaunchClass(unittest.TestCase):
-    def SetUp(self):
-        pass
+            os.system(f"{os.getcwd()}/scripts/update_repos.sh")
+            db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["REPO_FOLDER"]}'
+            db_file_path = os.path.join(db_wd, script_path).replace('\\','/')
+            self.create_job(job_name, cluster_id, db_file_path)
+            self.launch()
 
-    def test_run(self):
-        job_name = 'test_job'
-        cluster_id = '0715-112936-xf1o5dwg'
-        code = 'print("Hola mundo!")'
-        dbjl = DatabricksJobLaunchClass(DATABRICKS_INSTANCE=os.environ['DATABRICKS_INSTANCE'], API_TOKEN=os.environ['DB_TOKEN'], JOB_NAME=job_name)
-        dbjl.run_job_from_code(code, job_name, cluster_id)
+    class TestDatabricksJobLaunchClass(unittest.TestCase):
+        def SetUp(self):
+            pass
+
+        def test_run(self):
+            job_name = 'test_job'
+            cluster_id = '0715-112936-xf1o5dwg'
+            code = 'print("Hola mundo!")'
+            dbjl = DatabricksJobLaunchClass(DATABRICKS_INSTANCE=os.environ['DATABRICKS_INSTANCE'], API_TOKEN=os.environ['DB_TOKEN'], JOB_NAME=job_name)
+            dbjl.run_job_from_code(code, job_name, cluster_id)
