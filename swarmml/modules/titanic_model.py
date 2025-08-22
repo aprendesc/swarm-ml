@@ -108,8 +108,3 @@ class TitanicModelClass:
 
     def predict(self, config={}):
         return config
-
-    def serving(self):
-        # sv = Serving(**d).deploy_endpoint()
-        # data = Serving(**d).call_endpoint(d)
-        pass
