@@ -27,13 +27,29 @@ class MainClass:
         config = self.model(config).predict(config)
         return config
 
-    def deploy(self):
-        pass
+    def serving(self, config):
+        from swarmcompute.main import MainClass
+        def aux(method, config):
+            return getattr(self, method)(config)
+        config['node_method'] = aux
+        MainClass().launch_node(config)
+        return config
+
+    def deploy(self, config):
+        from swarmml.modules.databricks_utils import DatabricksJobLaunchClass
+        code = """
+from swarmml.main import MainClass
+from swarmml.configs.base_config import Config
+main = MainClass()
+main.initialize(Config().initialize())
+main.serving(Config().serving())
+"""
+        job_name = config['job_name']
+        cluster_id = config['cluster_id']
+        DatabricksJobLaunchClass().run_job_from_code(code, job_name, cluster_id)
 
     def call(self, config):
         from swarmcompute.main import MainClass as SCMainClass
         ################################################################################################################
-        sc_main = SCMainClass(config)
-        response = sc_main.launch_personal_net(config)
-        config['response'] = response
+        config = SCMainClass().launch_client(config)
         return config

@@ -108,12 +108,32 @@ class Config:
         }
         return base_cfg | (update or {})
 
+    def serving(self, update=None):
+        base_cfg = {
+                'master_address': 'tcp://localhost:5005',
+                'password': 'internal_pass',
+                'node_name': 'swarm-ml_node',
+                'node_method': None,
+                'delay': 1,
+                'wait': True
+                      }
+        return base_cfg | (update or {})
+
     def deploy(self, update=None):
         base_cfg = {
+            'cluster_id': '0715-112936-xf1o5dwg',
+            'job_name': 'deployment'
         }
         return base_cfg | (update or {})
 
     def call(self, update=None):
         base_cfg = {
+            'master_address': 'tcp://localhost:5005',
+            'password': 'internal_pass',
+            'node_name': 'swarm-ml_client',
+            'address_node': 'swarm-ml_node',
+            'payload': {'method':'train', 'config': self.train()},
+            'delay': 0.1,
+            'wait': False,
         }
         return base_cfg | (update or {})

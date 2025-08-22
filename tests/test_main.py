@@ -30,8 +30,15 @@ class TestMain(unittest.TestCase):
         self.main.initialize(self.cfg.initialize())
         self.main.predict(self.cfg.predict())
 
+    def test_serving(self):
+        self.main.initialize(self.cfg.initialize())
+        self.main.serving(self.cfg.serving(update={'wait':False}))
+
     def test_deploy(self):
-        pass
+        self.main.deploy(self.cfg.deploy())
 
     def test_call(self):
+        self.main.initialize(self.cfg.initialize())
+        self.main.serving(self.cfg.serving(update={'wait':False}))
+        self.main.call(self.cfg.call(update={'wait':False}))
         pass
