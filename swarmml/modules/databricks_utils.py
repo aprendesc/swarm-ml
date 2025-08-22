@@ -63,18 +63,6 @@ class DatabricksJobLaunchClass:
         filename = os.path.basename(temp_full_path)
         DatabricksStorageUtilsClass().cloud_upload_file(temp_dir, "/tmp/", filename)
         os.unlink(temp_full_path)
-        #script_path = f'scripts/{cluster_id}.py'
-        #with open(script_path, "w") as archivo:
-        #    archivo.write(code)
-        #with open(f"./scripts/update_repos_template.sh", "r") as f:
-        #    template = f.read()
-        #template = template.replace('<DB_REPO_ID>', os.environ['DB_REPO_ID']).replace('<PROJECT_FOLDER>', os.environ['REPO_FOLDER']).replace('<PROJECT_NAME>', os.environ['MODULE_NAME'])
-        #with open(f"./scripts/update_repos.sh", "w") as f:
-        #    f.write(template)
-
-        #os.system(f"{os.getcwd()}/scripts/update_repos.sh")
-        #db_wd = f'/Workspace/Repos/alejandropca@ext.inditex.com/{os.environ["REPO_FOLDER"]}'
-        #db_file_path = os.path.join(db_wd, script_path).replace('\\', '/')
         self.create_job(job_name, cluster_id, os.path.join('dbfs:/tmp', filename).replace('\\','/'))
         self.launch()
 
