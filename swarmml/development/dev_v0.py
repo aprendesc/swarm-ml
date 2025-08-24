@@ -1,37 +1,13 @@
-import os
-from eigenlib.utils.project_setup import ProjectSetup
-########################################################################################################################
-os.environ['BASE_PATH'] = f'C:/Users/{os.environ["USERNAME"]}/Desktop/proyectos'
-os.environ['REPO_FOLDER'] = 'swarm-ml'
-os.environ['MODULE_NAME'] = 'swarmml'
-########################################################################################################################
-ps = ProjectSetup()
-ps.init()
-ps.coverage()
-########################################################################################################################
+import unittest
+from swarmml.main import Main
+from swarmml.configs.base_config import Config
 
+class TestDev(unittest.TestCase):
+    def setUp(self):
+        self.main = Main()
+        self.cfg = Config(version='test')
 
+    def test_under_development(self):
+        print('Development  test')
 
-
-
-if False:
-    #TEMPLATES
-    class MyClass:
-        def __init__(self):
-            pass
-
-        def run(self):
-            print(ps)
-            print('Hola Mundo!')
-
-    import unittest
-    class TestMyClass(unittest.TestCase):
-        def SetUp(self):
-            pass
-
-        def test_run(self):
-            mc = MyClass()
-            mc.run()
-
-    ########################################################################################################################
 

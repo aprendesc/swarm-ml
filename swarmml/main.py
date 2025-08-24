@@ -1,6 +1,6 @@
 from eigenlib.utils.project_setup import ProjectSetup
 
-class MainClass:
+class Main:
     def __init__(self):
         ProjectSetup().init()
 
@@ -28,19 +28,19 @@ class MainClass:
         return config
 
     def serving(self, config):
-        from swarmcompute.main import MainClass
+        from swarmcompute.main import Main
         def aux(method, config):
             return getattr(self, method)(config)
         config['node_method'] = aux
-        MainClass().launch_node(config)
+        Main().launch_node(config)
         return config
 
     def deploy(self, config):
         from swarmml.modules.databricks_utils import DatabricksJobLaunchClass
         code = """
-from swarmml.main import MainClass
+from swarmml.main import Main
 from swarmml.configs.base_config import Config
-main = MainClass()
+main = Main()
 main.initialize(Config().initialize())
 main.serving(Config().serving())
 """
@@ -49,7 +49,7 @@ main.serving(Config().serving())
         DatabricksJobLaunchClass().run_job_from_code(code, job_name, cluster_id)
 
     def call(self, config):
-        from swarmcompute.main import MainClass as SCMainClass
+        from swarmcompute.main import Main as SCMain
         ################################################################################################################
-        config = SCMainClass().launch_client(config)
+        config = SCMain().launch_client(config)
         return config

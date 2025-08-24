@@ -1,10 +1,10 @@
 import unittest
-from swarmml.main import MainClass
+from swarmml.main import Main
 from swarmml.configs.base_config import Config
 
 class TestMain(unittest.TestCase):
     def setUp(self):
-        self.main = MainClass()
+        self.main = Main()
         self.cfg = Config(version='test')
 
     def test_initialize(self):
