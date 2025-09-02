@@ -2,6 +2,11 @@ class TitanicModelClass:
     def __init__(self, config):
         self.hypothesis = 'Modelo titanic de pruebas'
 
+    def initialize(self, config):
+        from eigenlib.ML.basic_model_loader import BasicModelLoaderClass
+        model_loader = BasicModelLoaderClass(cloud=config.get('cloud', False), save_model=False)
+        self.PL = model_loader.load(config['model_id'])
+
     def ETL(self, config=None):
         from eigenlib.ML.etl_dummy import ETLDummyClass
         selected_dataset = config['selected_dataset']
@@ -103,8 +108,8 @@ class TitanicModelClass:
         score_df, metadata = PL.metrics.run(y_test, y_pred_test, PL.metadata)
         print(score_df)
 
-    def run_front(self):
-        pass
-
-    def predict(self, config={}):
+    def predict(self, config):
+        y_pred = self.PL.inference(config['X'], config.get('metadata', {}))
+        config['y_pred'] = y_pred
         return config
+

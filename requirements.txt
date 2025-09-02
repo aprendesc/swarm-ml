@@ -18,3 +18,7 @@ azure-identity
 optuna
 asciichartpy
 tabulate
+orjson
+h5py
+soundfile
+tables

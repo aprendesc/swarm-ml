@@ -24,6 +24,7 @@ class Config:
 
     def train(self, update=None):
         model_id = f'titanic_test_{self.version}'
+        update = self.initialize()
         Catboost_params_dict = {
             'iterations': 1000,
             'learning_rate': 0.01,
